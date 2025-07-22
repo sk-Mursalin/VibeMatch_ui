@@ -7,9 +7,11 @@ import { BASE_URL } from "../utils/constant";
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [err,setErr]  = useState()
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const loginHandle = async () => {
+        try{
         const response = await axios.post(
             BASE_URL + "/login",
             {
@@ -20,6 +22,10 @@ const Login = () => {
         )
         dispatch(addUser(response.data));
         return navigate('/')
+    }catch(err){
+        setErr(err.response.data)
+        console.log(err);
+    }
     }
 
 
@@ -40,6 +46,7 @@ const Login = () => {
                         onChange={(e) => { setPassword(e.target.value) }}
                     />
                 </fieldset>
+                <p className="text-red-600">{err}</p>
                 <div className="card-actions justify-center">
                     <button className="btn btn-primary" onClick={loginHandle}>Log In</button>
                 </div>
