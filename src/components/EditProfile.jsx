@@ -4,15 +4,16 @@ import { useDispatch } from "react-redux"
 import { BASE_URL } from "../utils/constant";
 import { addUser } from "../store/slices/userSlice";
 
-const EditProfile = ({user}) => {
+const EditProfile = ({ user }) => {
   const dispatch = useDispatch();
   console.log(user);
   const [firstName, setFirstName] = useState(user.user.firstName);
-  const [lastName, setLastName] = useState(user.user.lastName)
+  const [lastName, setLastName] = useState(user.user.lastName);
   const [age, setAge] = useState(user.user.age);
   const [photoUrl, setPhotoUrl] = useState(user.user.photoUrl);
   const [skill, setSkill] = useState(user.user.skill);
   const [gender, setGender] = useState(user.user.gender);
+  const [toast, setToast] = useState(false);
 
 
   const editHandler = async () => {
@@ -26,6 +27,10 @@ const EditProfile = ({user}) => {
       }, { withCredentials: true });
       console.log(res.data);
       dispatch(addUser(res.data))
+      setToast(true)
+      setTimeout(() => {
+        setToast(false)
+      }, 2000)
     } catch (err) {
       console.log(err.message);
     }
@@ -84,6 +89,11 @@ const EditProfile = ({user}) => {
           <p >gender: {gender}</p>
         </div>
       </div>
+      {toast && <div className="toast toast-top toast-center">
+        <div className="alert alert-success">
+          <span>profile update successfully.</span>
+        </div>
+      </div>}
     </div>
   )
 }
