@@ -6,7 +6,6 @@ import { addUser } from "../store/slices/userSlice";
 
 const EditProfile = ({ user }) => {
   const dispatch = useDispatch();
-  console.log(user);
   const [firstName, setFirstName] = useState(user.user.firstName);
   const [lastName, setLastName] = useState(user.user.lastName);
   const [age, setAge] = useState(user.user.age);
@@ -25,7 +24,6 @@ const EditProfile = ({ user }) => {
         photoUrl,
         gender
       }, { withCredentials: true });
-      console.log(res.data);
       dispatch(addUser(res.data))
       setToast(true)
       setTimeout(() => {

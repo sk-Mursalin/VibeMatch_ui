@@ -20,6 +20,8 @@ const Feed = () => {
     fetchUserFeed()
   }, []);
 
+  // if(feed.length=== 0) return <h2>no new user found</h2>
+
   return (
     feed && <FeedCard feedData = {feed[0]}/>
   )

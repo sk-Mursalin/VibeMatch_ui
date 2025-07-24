@@ -21,7 +21,6 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/request" element={<Request />} />
               <Route path="/connections" element={<AllConnection />} />
-
             </Route>
           </Routes>
         </BrowserRouter>
