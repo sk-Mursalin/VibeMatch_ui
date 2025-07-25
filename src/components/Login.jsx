@@ -53,7 +53,7 @@ const Login = () => {
     }
 
     return (
-        <div className="card card-border bg-base-300 w-96 mx-auto mt-7">
+        <div className="card card-border bg-base-300 max-w-96 screen400:mx-auto screen350:mx-2  mt-7 ">
             <div className="card-body">
                 <h2 className="card-title justify-center">{isLogInForm ? "Log IN" : "signUp"}</h2>
                 {!isLogInForm && <>

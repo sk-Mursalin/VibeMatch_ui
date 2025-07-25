@@ -4,6 +4,7 @@ import { BASE_URL } from '../utils/constant'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFeed } from '../store/slices/feedSlice'
+import NoFeed from './Nofeed'
 
 const Feed = () => {
   const feed = useSelector((state) => state.feed);
@@ -20,10 +21,11 @@ const Feed = () => {
     fetchUserFeed()
   }, []);
 
-  // if(feed.length=== 0) return <h2>no new user found</h2>
+  if(!feed) return 
+  if(feed.length<= 0) return <NoFeed/>
 
   return (
-    feed && <FeedCard feedData = {feed[0]}/>
+     <FeedCard feedData = {feed[0]}/>
   )
 }
 

@@ -14,7 +14,7 @@ const FeedCard = ({ feedData }) => {
         <div className="card bg-base-300 w-96 shadow-sm mx-auto mt-8">
             <figure>
                 <img className=' rounded-md w-full max-h-72'
-                    src={photoUrl ? photoUrl : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRISuukVSb_iHDfPAaDKboFWXZVloJW9XXiwGYFab-QwlAYQ3zFsx4fToY9ijcVNU5ieKk&usqp=CAU"}
+                    src={photoUrl}
                     alt="Shoes" />
             </figure>
             <div className="card-body">

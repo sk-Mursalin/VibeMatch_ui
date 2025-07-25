@@ -21,7 +21,7 @@ const AllConnection = () => {
     return (
         <div className='w-1/2  mx-auto'>
             {connections.data.map((el) => {
-                return <div className="card w-full bg-base-300 card-xs shadow-sm mt-4">
+                return <div key={el._id} className="card w-full bg-base-300 card-xs shadow-sm mt-4">
                     <div className=" flex justify-between align-middle py-4 px-3">
                         <div className='w-11'>
                             <img className=" w-full h-11 rounded-full" src={el.photoUrl} alt="" />
