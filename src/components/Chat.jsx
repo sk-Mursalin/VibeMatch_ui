@@ -23,15 +23,15 @@ const ChatWindow = () => {
     };
 
     useEffect(() => {
-        if(!user){
-            return 
+        if (!user) {
+            return
         }
         const socket = createSocketConnection();
         socket.emit("joinChat", { userId, targetUserId });
         return () => {
             socket.disconnect();
         }
-    }, [userId,targetUserId]);
+    }, [userId, targetUserId]);
 
     return (
         <div className=" max-w-2xl mx-auto flex flex-col h-full bg-[#0f1117] rounded-lg overflow-hidden border border-gray-800 mt-5">

@@ -11,7 +11,7 @@ const FeedCard = ({ feedData }) => {
         dispatch(removeFromFeed(_id));
     }
     return (
-        <div className="card bg-base-300 w-96 shadow-sm mx-auto mt-8">
+        <div className="card bg-base-300 max-w-96 shadow-sm mx-auto mt-8">
             <figure>
                 <img className=' rounded-md w-full max-h-72'
                     src={photoUrl}

@@ -35,8 +35,8 @@ const EditProfile = ({ user }) => {
   }
 
   return (
-    < div className="flex mx-auto max-w-[850px] justify-between  mt-4">
-      <div className="card card-border bg-base-300 w-96">
+    < div className="screen705:flex screen705:flex-row screen705:mx-auto max-w-[850px] justify-between  mt-4 screen350:gap-3">
+      <div className="card card-border bg-base-300 screen705:w-96 screen350:mx-auto screen350:max-w-96">
         <div className="card-body">
           <h2 className="card-title justify-center">Edit Profile</h2>
           <fieldset className="fieldset">
@@ -75,9 +75,9 @@ const EditProfile = ({ user }) => {
           </div>
         </div>
       </div>
-      <div className="card bg-base-300 w-96 shadow-sm ">
+      <div className="card bg-base-300  max-w-96 shadow-sm h-full  p-4 screen350:mx-auto screen350:mt-4">
         <figure>
-          <img className=' rounded-md w-full max-h-72'
+          <img className=' rounded-md w-full'
             src={photoUrl}
             alt="Shoes" />
         </figure>

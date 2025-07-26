@@ -3,10 +3,12 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      screens:{
+      screens: {
         "screen350": "350px",
-        "screen400": "400px"
-
+        "screen400": "400px",
+        "screen900": "900px",
+        "screen780": "781px",
+        "screen705": "705px"
       }
     },
   },

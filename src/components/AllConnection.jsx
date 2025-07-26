@@ -16,21 +16,25 @@ const AllConnection = () => {
     useEffect(() => {
         fetchConnectionRequest()
     }, []);
+
     if (!connections) return
     if (connections.length === 0) { return <h1 className='text-center font-bold mt-3'> you don't have any request  </h1> }
     return (
-        <div className='w-1/2  mx-auto'>
-            {connections.data.map((el) => {
-                return <div key={el._id} className="card w-full bg-base-300 card-xs shadow-sm mt-4">
-                    <div className=" flex justify-between align-middle py-4 px-3">
-                        <div className='w-11 flex gap-7'>
-                            <img className=" w-full h-11 rounded-full" src={el.photoUrl} alt="" />
-                            <Link to={"/chat/" + el._id}><button className="btn btn-soft btn-error">chat</button></Link>
+        <div>
+            <div className='screen900:w-1/2  screen900:max-w-[700px] screen350:max-w-full screen900:mx-auto screen350:mx-6'>
+
+                {connections.data.map((el) => {
+                    return <div key={el._id} className="card w-full bg-base-300 card-xs shadow-sm mt-4">
+                        <div className=" flex justify-between align-middle py-4 px-3">
+                            <div className='w-11 flex gap-7'>
+                                <img className=" w-full h-11 rounded-full" src={el.photoUrl} alt="" />
+                                <Link to={"/chat/" + el._id}><button className="btn btn-soft btn-error">chat</button></Link>
+                            </div>
+                            <h2 className="card-title">{`${el.firstName} ${el.lastName}`}</h2>
                         </div>
-                        <h2 className="card-title">{`${el.firstName} ${el.lastName}`}</h2>
                     </div>
-                </div>
-            })}
+                })}
+            </div>
         </div>
     )
 }
