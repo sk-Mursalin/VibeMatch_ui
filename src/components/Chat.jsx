@@ -38,12 +38,12 @@ const ChatWindow = () => {
             <div className="p-4 border-b border-gray-800 text-white font-semibold text-lg">
                 {"sk Mursalin" || "Select a user"}
             </div>
-            <div className="flex-1 p-4 space-y-3 overflow-y-auto text-sm">
+            <div className="  p-4 space-y-3 overflow-y-auto text-sm bg-slate-50">
                 {messages.map((msg, index) => (
                     <div
                         key={index}
-                        className={`max-w-[30%] px-4 py-2 rounded-lg ${msg.sender === "you"
-                            ? "bg-blue-600 text-white self-end ml-auto"
+                        className={`max-w-[30%] flex px-4 py-2 rounded-lg ${msg.sender === "you"
+                            ? "bg-blue-600 text-white ml-auto "
                             : "bg-gray-800 text-white self-start mr-auto"
                             }`}
                     >
