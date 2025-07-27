@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import { useEffect,  useState } from "react";
+import { useEffect, useState } from "react";
 import { createSocketConnection } from '../utils/socket';
 import { useSelector } from 'react-redux';
 
@@ -30,8 +30,8 @@ const ChatWindow = () => {
         const socket = createSocketConnection();
         socket.emit("joinChat", { userId, targetUserId });
 
-        socket.on("recivedMessage", ({ messages,targetUserId }) => {
-            if(userId !== targetUserId) return 
+        socket.on("recivedMessage", ({ messages, targetUserId }) => {
+            if (userId !== targetUserId) return
             setMessages((prevState) => [...prevState, { sender: "them", text: messages }])
         });
 
@@ -51,9 +51,9 @@ const ChatWindow = () => {
                 {messages.map((msg, index) => (
                     <div
                         key={index}
-                        className={`max-w-[30%] flex px-4 py-2 rounded-lg ${msg.sender === "you"
+                        className={`screen400:max-w-[30%]  screen350:max-w-[70%] break-words  px-4 py-2 rounded-lg ${msg.sender === "you"
                             ? "bg-blue-600 text-white ml-auto "
-                            : "bg-gray-800 text-white self-start mr-auto"
+                            : "bg-gray-800 text-white  mr-auto"
                             }`}
                     >
                         {msg.text}
