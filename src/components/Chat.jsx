@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import { useEffect, useState } from "react";
+import { useEffect,  useState } from "react";
 import { createSocketConnection } from '../utils/socket';
 import { useSelector } from 'react-redux';
 
@@ -8,17 +8,18 @@ const ChatWindow = () => {
     const { targetUserId } = useParams();
     const user = useSelector((store) => store.user?.user);
     const userId = user?._id
-    const [messages, setMessages] = useState([
-        { sender: "them", text: "Hello! How can I help you?" },
-        { sender: "you", text: "I have a question about my order." },
-    ]);
     const [input, setInput] = useState("");
+    const [messages, setMessages] = useState([
+        { sender: "you", text: "helo" },
+    ]);
 
     const handleSend = (e) => {
         e.preventDefault();
         if (input.trim() === "") return;
-
-        setMessages([...messages, { sender: "you", text: input }]);
+        setMessages((prevState) => [...prevState, { sender: "you", text: input }]);
+        console.log(input);
+        const socket = createSocketConnection();
+        socket.emit("sendMessage", { messages: input, userId, targetUserId });
         setInput("");
     };
 
@@ -28,17 +29,25 @@ const ChatWindow = () => {
         }
         const socket = createSocketConnection();
         socket.emit("joinChat", { userId, targetUserId });
+
+        socket.on("recivedMessage", ({ messages,targetUserId }) => {
+            if(userId !== targetUserId) return 
+            setMessages((prevState) => [...prevState, { sender: "them", text: messages }])
+        });
+
         return () => {
             socket.disconnect();
         }
     }, [userId, targetUserId]);
+
+
 
     return (
         <div className=" max-w-2xl mx-auto flex flex-col h-full bg-[#0f1117] rounded-lg overflow-hidden border border-gray-800 mt-5">
             <div className="p-4 border-b border-gray-800 text-white font-semibold text-lg">
                 {"sk Mursalin" || "Select a user"}
             </div>
-            <div className="  p-4 space-y-3 overflow-y-auto text-sm bg-slate-50">
+            <div className="  p-4 space-y-3 overflow-y-auto text-sm">
                 {messages.map((msg, index) => (
                     <div
                         key={index}
