@@ -1,86 +1,117 @@
-import { useParams } from 'react-router-dom';
-
 import { useEffect, useState } from "react";
-import { createSocketConnection } from '../utils/socket';
-import { useSelector } from 'react-redux';
+import { useParams } from "react-router-dom";
+import { createSocketConnection } from "../utils/socket";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { BASE_URL } from "../utils/constant";
 
-const ChatWindow = () => {
+const Chat = () => {
     const { targetUserId } = useParams();
-    const user = useSelector((store) => store.user?.user);
-    const userId = user?._id
-    const [input, setInput] = useState("");
-    const [messages, setMessages] = useState([
-        { sender: "you", text: "helo" },
-    ]);
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState("");
+    const user = useSelector((store) => store.user);
+    const userId = user?.user?._id;
+    console.log(userId);
 
-    const handleSend = (e) => {
-        e.preventDefault();
-        if (input.trim() === "") return;
-        setMessages((prevState) => [...prevState, { sender: "you", text: input }]);
-        console.log(input);
-        const socket = createSocketConnection();
-        socket.emit("sendMessage", { messages: input, userId, targetUserId });
-        setInput("");
+    const fetchChatMessages = async () => {
+        const chat = await axios.get(BASE_URL + "/chat/" + targetUserId, {
+            withCredentials: true,
+        });
+
+        console.log(chat.data.messages);
+
+        const chatMessages = chat?.data?.messages.map((msg) => {
+            const { senderId, text } = msg;
+            return {
+                firstName: senderId?.firstName,
+                lastName: senderId?.lastName,
+                text,
+            };
+        });
+        setMessages(chatMessages);
     };
+    useEffect(() => {
+        fetchChatMessages();
+    }, []);
 
     useEffect(() => {
-        if (!user) {
-            return
+        if (!userId) {
+            return;
         }
         const socket = createSocketConnection();
-        socket.emit("joinChat", { userId, targetUserId });
+        socket.emit("joinChat", {
+            firstName: user?.user?.firstName,
+            lastName: user?.user?.lastName,
+            userId,
+            targetUserId,
+        });
 
-        socket.on("recivedMessage", ({ messages, targetUserId }) => {
-            if (userId !== targetUserId) return
-            setMessages((prevState) => [...prevState, { sender: "them", text: messages }])
+        socket.on("messageReceived", ({ firstName, lastName, text }) => {
+            setMessages((prevState) => [...prevState, { firstName, lastName, text }]);
         });
 
         return () => {
             socket.disconnect();
-        }
+        };
     }, [userId, targetUserId]);
 
-
+    const sendMessage = () => {
+        const socket = createSocketConnection();
+        socket.emit("sendMessage", {
+            firstName: user?.user?.firstName,
+            lastName: user?.user?.lastName,
+            userId,
+            targetUserId,
+            text: newMessage,
+        });
+        setNewMessage("");
+    };
 
     return (
-        <div className=" max-w-2xl mx-auto flex flex-col h-full bg-[#0f1117] rounded-lg overflow-hidden border border-gray-800 mt-5">
-            <div className="p-4 border-b border-gray-800 text-white font-semibold text-lg">
-                {"sk Mursalin" || "Select a user"}
+        <div className="w-full max-w-3xl mx-auto border border-gray-700 rounded-lg shadow-md mt-6 h-[70vh] flex flex-col bg-gray-900 text-white">
+            <div className="p-4 border-b border-gray-700 text-lg font-semibold bg-gray-800">
+                Chat
             </div>
-            <div className="  p-4 space-y-3 overflow-y-auto text-sm">
+
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {messages.map((msg, index) => (
                     <div
                         key={index}
-                        className={`screen400:max-w-[30%]  screen350:max-w-[70%] break-words  px-4 py-2 rounded-lg ${msg.sender === "you"
-                            ? "bg-blue-600 text-white ml-auto "
-                            : "bg-gray-800 text-white  mr-auto"
+                        className={`flex flex-col max-w-[70%] ${user.user.firstName === msg.firstName ? "ml-auto items-end" : "mr-auto items-start"
                             }`}
                     >
-                        {msg.text}
+                        <div className="text-xs text-gray-400 mb-1">
+                            {`${msg.firstName} ${msg.lastName}`} 
+                        </div>
+                        <div
+                            className={`rounded-lg px-4 py-2 text-sm ${user.user.firstName === msg.firstName
+                                    ? "bg-blue-600 text-white"
+                                    : "bg-gray-700 text-white"
+                                }`}
+                        >
+                            {msg.text}
+                        </div>
+                        {/* <div className="text-[10px] text-gray-500 mt-1">Seen</div> */}
                     </div>
                 ))}
             </div>
 
-            <form
-                onSubmit={handleSend}
-                className="flex items-center gap-2 p-4 border-t border-gray-800"
-            >
+            <div className="p-4 border-t border-gray-700 bg-gray-800 flex items-center gap-3">
                 <input
-                    type="text"
-                    className="flex-1 px-4 py-2 rounded bg-gray-900 text-white focus:outline-none"
-                    placeholder="Type a message..."
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    className="flex-1 bg-gray-900 border border-gray-600 rounded-md px-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Type your message..."
                 />
                 <button
-                    type="submit"
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
+                    onClick={sendMessage}
+                    className="bg-blue-600 hover:bg-blue-700 transition text-white px-4 py-2 rounded-md text-sm font-medium"
                 >
                     Send
                 </button>
-            </form>
+            </div>
         </div>
+
     );
 };
-
-export default ChatWindow;
+export default Chat;
