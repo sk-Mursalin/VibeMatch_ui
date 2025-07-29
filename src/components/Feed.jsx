@@ -4,7 +4,7 @@ import { BASE_URL } from '../utils/constant'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFeed } from '../store/slices/feedSlice'
-import NoFeed from './Nofeed'
+import NoFeed from './NoFeed'
 
 const Feed = () => {
   const feed = useSelector((state) => state.feed);
