@@ -1,9 +1,9 @@
-
+import image from "../assets/no-feed.png"
 const NoFeed = () => {
   return (
     <div className="flex flex-col items-center justify-center h-full p-6 text-center">
-      <img 
-        // src={nofeed}
+      <img
+        src={image}
         alt="No feed"
         className="w-40 h-40 mb-6 opacity-80 rounded-md"
       />
