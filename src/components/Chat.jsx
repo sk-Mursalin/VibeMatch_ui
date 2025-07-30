@@ -73,18 +73,18 @@ const Chat = () => {
                 Chat
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 ">
                 {messages.map((msg, index) => (
                     <div
                         key={index}
-                        className={`flex flex-col max-w-[70%] ${user.user.firstName === msg.firstName ? "ml-auto items-end" : "mr-auto items-start"
+                        className={`flex flex-col screen350:max-w-[60%] screen400:max-w-[70%] ${user.user.firstName === msg.firstName ? "ml-auto items-end" : "mr-auto items-start"
                             }`}
                     >
                         <div className="text-xs text-gray-400 mb-1">
                             {`${msg.firstName} ${msg.lastName}`} 
                         </div>
                         <div
-                            className={`rounded-lg px-4 py-2 text-sm ${user.user.firstName === msg.firstName
+                            className={`rounded-lg px-4 py-2 break-all  text-sm ${user.user.firstName === msg.firstName
                                     ? "bg-blue-600 text-white"
                                     : "bg-gray-700 text-white"
                                 }`}
