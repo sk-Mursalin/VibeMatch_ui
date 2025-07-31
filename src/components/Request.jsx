@@ -1,8 +1,10 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 import { BASE_URL } from '../utils/constant'
 import { useDispatch, useSelector } from 'react-redux'
 import { addConnection, removeConnection } from '../store/slices/requestSlice'
+import NoFeed from './NoFeed'
+import image from "../assets/no-connection-request.png"
 
 const Request = () => {
     const connectionRequest = useSelector((state) => state.request)
@@ -25,7 +27,7 @@ const Request = () => {
 
 
     if (!connectionRequest) return
-    if (connectionRequest.data.length === 0) { return <h1 className='text-center font-bold mt-3'> you don't have any request  </h1> }
+    if (connectionRequest.data.length === 0) { return <NoFeed heading={"no connection request"} message={"you have no pending requests. check again later for any new invites!"} image={image} /> }
     return (
         <div>
             <div className='screen900:w-1/2  screen900:max-w-[700px] screen350:max-w-full screen900:mx-auto screen350:mx-6'>

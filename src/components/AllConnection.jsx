@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../utils/constant";
 import { Link } from "react-router-dom";
+import NoFeed from "./NoFeed";
+import image from "../assets/no-connection.png"
 
 const AllConnection = () => {
     const connections = useSelector((state) => state.friend)
@@ -18,7 +20,7 @@ const AllConnection = () => {
     }, []);
 
     if (!connections) return
-    if (connections.length === 0) { return <h1 className='text-center font-bold mt-3'> you don't have any request  </h1> }
+    if (connections.data.length === 0) { return <NoFeed heading={" you have no connections right now"} message={"check later to see new firnds"} image={image} /> }
     return (
         <div>
             <div className='screen900:w-1/2  screen900:max-w-[700px] screen350:max-w-full screen900:mx-auto screen350:mx-6'>
