@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constant";
-import { validationConfig } from "../utils/validationConfig";
+
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "", firstName: "", lastName: "" });
@@ -13,6 +13,15 @@ const Login = () => {
     const [validationData, setValidationData] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    let validationConfig = {
+        email: [{ require: true, message: "please enter email" }, { pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "please enter valid email syntax" }],
+        password: [{ require: true, message: "please enter password" }, { minLength: 6, message: "password should at least 6 charecter" }],
+        firstName: [{ require: true, message: "please enter firstname" }],
+        lastName: [{ require: true, message: "please enter lastname" }],
+    }
+
+
 
     const validation = () => {
         const copyValidationData = {};
@@ -27,7 +36,7 @@ const Login = () => {
                     copyValidationData[key] = rule.message
                     return true
                 }
-                if(rule.pattern && !rule.pattern.test(value)){
+                if (rule.pattern && !rule.pattern.test(value)) {
                     copyValidationData[key] = rule.message
                     return true
                 }
@@ -45,9 +54,7 @@ const Login = () => {
 
     const loginHandle = async () => {
         const { email, password } = formData
-        const data = validation();
 
-        if (Object.keys(data).length > 0) return
         try {
             const response = await axios.post(
                 BASE_URL + "/login",
@@ -61,6 +68,7 @@ const Login = () => {
             return navigate('/')
         } catch (err) {
             setErr(err.response.data)
+            console.log(err.response.data);
         }
     }
 
