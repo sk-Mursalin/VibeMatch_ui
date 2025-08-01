@@ -5,16 +5,48 @@ import { addUser } from "../store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constant";
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const [formData, setFormData] = useState({ email: "", password: "", firstName: "", lastName: "" });
     const [isLogInForm, setIsLogInForm] = useState(true)
     const [err, setErr] = useState()
+    const [validationData, setValidationData] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+
+
+    const validationConfig = {
+        email: [{ require: true, message: "please enter email" }],
+        password: [{ require: true, message: "please enter password" }],
+        firstName: [{ require: true, message: "please enter firstname" }],
+        lastName: [{ require: true, message: "please enter lastname" }],
+    }
+
+
+
+
+    const validation = () => {
+        const copyValidationData = {};
+
+        if (!formData.email) {
+            copyValidationData.email = "please enter email"
+        }
+        if (!formData.password) {
+            copyValidationData.password = "please enter password"
+        }
+        setValidationData(copyValidationData)
+        return copyValidationData;
+    }
+    const formHandle = (e) => {
+        const { name, value } = e.target
+        setFormData((prvState) => ({ ...prvState, [name]: value }))
+    }
+
     const loginHandle = async () => {
+        const { email, password } = formData
+        const data = validation();
+        console.log(data);
+
+        if (Object.keys(data).length > 0) return
         try {
             const response = await axios.post(
                 BASE_URL + "/login",
@@ -28,11 +60,12 @@ const Login = () => {
             return navigate('/')
         } catch (err) {
             setErr(err.response.data)
-            console.log(err);
         }
     }
 
     const signUPHandle = async () => {
+        const { email, password, firstName, lastName } = formData
+
         try {
             const response = await axios.post(
                 BASE_URL + "/signup",
@@ -59,28 +92,31 @@ const Login = () => {
                 {!isLogInForm && <>
                     <fieldset className="fieldset">
                         <legend className="fieldset-legend font-normal">FirstName:</legend>
-                        <input type="text" className="input" placeholder="Type here" value={firstName}
-                            onChange={(e) => { setFirstName(e.target.value) }}
+                        <input type="text" name="firstName" className="input" placeholder="Type here" value={formData.firstName}
+                            onChange={(e) => { formHandle(e) }}
                         />
+
                     </fieldset>
                     <fieldset className="fieldset">
                         <legend className="fieldset-legend font-normal">LastName:</legend>
-                        <input type="text" className="input" placeholder="Type here" value={lastName}
-                            onChange={(e) => { setLastName(e.target.value) }}
+                        <input type="text" name="lastName" className="input" placeholder="Type here" value={formData.lastName}
+                            onChange={(e) => { formHandle(e) }}
                         />
                     </fieldset>
                 </>}
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend font-normal">Email:</legend>
-                    <input type="text" className="input" placeholder="Type here" value={email}
-                        onChange={(e) => { setEmail(e.target.value) }}
+                    <input type="text" name="email" className="input" placeholder="Type here" value={formData.email}
+                        onChange={(e) => { formHandle(e) }}
                     />
+                    <p className="text-red-600">{validationData.email}</p>
                 </fieldset>
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend font-normal">Password:</legend>
-                    <input type="text" className="input" placeholder="Type here" value={password}
-                        onChange={(e) => { setPassword(e.target.value) }}
+                    <input type="password" name="password" className="input" placeholder="Type here" value={formData.password}
+                        onChange={(e) => { formHandle(e) }}
                     />
+                    <p className="text-red-600">{validationData.password}</p>
                 </fieldset>
                 <p className="text-red-600">{err}</p>
                 <div className="card-actions justify-center">
