@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constant";
+import { validationConfig } from "../utils/validationConfig";
+
 const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "", firstName: "", lastName: "" });
     const [isLogInForm, setIsLogInForm] = useState(true)
@@ -12,30 +14,30 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-
-
-    const validationConfig = {
-        email: [{ require: true, message: "please enter email" }],
-        password: [{ require: true, message: "please enter password" }],
-        firstName: [{ require: true, message: "please enter firstname" }],
-        lastName: [{ require: true, message: "please enter lastname" }],
-    }
-
-
-
-
     const validation = () => {
         const copyValidationData = {};
 
-        if (!formData.email) {
-            copyValidationData.email = "please enter email"
-        }
-        if (!formData.password) {
-            copyValidationData.password = "please enter password"
-        }
+        Object.entries(formData).forEach(([key, value]) => {
+            validationConfig[key].some((rule) => {
+                if (!value && rule.require) {
+                    copyValidationData[key] = rule.message
+                    return true
+                }
+                if (rule.minLength && value.length < rule.minLength) {
+                    copyValidationData[key] = rule.message
+                    return true
+                }
+                if(rule.pattern && !rule.pattern.test(value)){
+                    copyValidationData[key] = rule.message
+                    return true
+                }
+            })
+        })
+
         setValidationData(copyValidationData)
         return copyValidationData;
     }
+
     const formHandle = (e) => {
         const { name, value } = e.target
         setFormData((prvState) => ({ ...prvState, [name]: value }))
@@ -44,7 +46,6 @@ const Login = () => {
     const loginHandle = async () => {
         const { email, password } = formData
         const data = validation();
-        console.log(data);
 
         if (Object.keys(data).length > 0) return
         try {
@@ -65,6 +66,8 @@ const Login = () => {
 
     const signUPHandle = async () => {
         const { email, password, firstName, lastName } = formData
+        const data = validation();
+        if (Object.keys(data).length > 0) return
 
         try {
             const response = await axios.post(
@@ -81,7 +84,6 @@ const Login = () => {
             return navigate('/profile')
         } catch (err) {
             setErr(err.response.data)
-            console.log(err);
         }
     }
 
@@ -95,6 +97,7 @@ const Login = () => {
                         <input type="text" name="firstName" className="input" placeholder="Type here" value={formData.firstName}
                             onChange={(e) => { formHandle(e) }}
                         />
+                        <p className="text-red-600">{validationData.firstName}</p>
 
                     </fieldset>
                     <fieldset className="fieldset">
@@ -102,6 +105,8 @@ const Login = () => {
                         <input type="text" name="lastName" className="input" placeholder="Type here" value={formData.lastName}
                             onChange={(e) => { formHandle(e) }}
                         />
+                        <p className="text-red-600">{validationData.lastName}</p>
+
                     </fieldset>
                 </>}
                 <fieldset className="fieldset">
