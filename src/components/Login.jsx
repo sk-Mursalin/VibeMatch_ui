@@ -1,32 +1,35 @@
 import axios from "axios";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
 import { addUser } from "../store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constant";
+import { validationConfig } from "../utils/validation";
 
 
 const Login = () => {
-    const [formData, setFormData] = useState({ email: "", password: "", firstName: "", lastName: "" });
+    const [signupFormData, setSignupFormData] = useState({ email: "", password: "", firstName: "", lastName: "" });
+    const [loginFormData, setLoginFromData] = useState(() => {
+    const storedData = localStorage.getItem("formData");
+    return storedData ? JSON.parse(storedData) : { email: "", password: "" };
+  });
     const [isLogInForm, setIsLogInForm] = useState(true)
     const [err, setErr] = useState()
     const [validationData, setValidationData] = useState({});
+    const [logValidationData, setlogValidationData] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    let validationConfig = {
-        email: [{ require: true, message: "please enter email" }, { pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "please enter valid email syntax" }],
-        password: [{ require: true, message: "please enter password" }, { minLength: 6, message: "password should at least 6 charecter" }],
-        firstName: [{ require: true, message: "please enter firstname" }],
-        lastName: [{ require: true, message: "please enter lastname" }],
-    }
 
+    useEffect(() => {
+        localStorage.setItem("formData", JSON.stringify(loginFormData));
+    }, [loginFormData]);
 
 
     const validation = () => {
         const copyValidationData = {};
 
-        Object.entries(formData).forEach(([key, value]) => {
+        Object.entries(isLogInForm ? loginFormData : signupFormData).forEach(([key, value]) => {
             validationConfig[key].some((rule) => {
                 if (!value && rule.require) {
                     copyValidationData[key] = rule.message
@@ -43,18 +46,19 @@ const Login = () => {
             })
         })
 
-        setValidationData(copyValidationData)
+        isLogInForm ? setlogValidationData(copyValidationData) : setValidationData(copyValidationData)
         return copyValidationData;
     }
 
     const formHandle = (e) => {
         const { name, value } = e.target
-        setFormData((prvState) => ({ ...prvState, [name]: value }))
+        isLogInForm ? setLoginFromData((prvState) => ({ ...prvState, [name]: value })) : setSignupFormData((prvState) => ({ ...prvState, [name]: value }))
     }
 
     const loginHandle = async () => {
-        const { email, password } = formData
-
+        const { email, password } = loginFormData
+        const data = validation();
+        if (Object.keys(data).length > 0) return
         try {
             const response = await axios.post(
                 BASE_URL + "/login",
@@ -73,7 +77,7 @@ const Login = () => {
     }
 
     const signUPHandle = async () => {
-        const { email, password, firstName, lastName } = formData
+        const { email, password, firstName, lastName } = signupFormData
         const data = validation();
         if (Object.keys(data).length > 0) return
 
@@ -102,7 +106,7 @@ const Login = () => {
                 {!isLogInForm && <>
                     <fieldset className="fieldset">
                         <legend className="fieldset-legend font-normal">FirstName:</legend>
-                        <input type="text" name="firstName" className="input" placeholder="Type here" value={formData.firstName}
+                        <input type="text" name="firstName" className="input" placeholder="Type here" value={setSignupFormData.firstName}
                             onChange={(e) => { formHandle(e) }}
                         />
                         <p className="text-red-600">{validationData.firstName}</p>
@@ -110,7 +114,7 @@ const Login = () => {
                     </fieldset>
                     <fieldset className="fieldset">
                         <legend className="fieldset-legend font-normal">LastName:</legend>
-                        <input type="text" name="lastName" className="input" placeholder="Type here" value={formData.lastName}
+                        <input type="text" name="lastName" className="input" placeholder="Type here" value={setSignupFormData.lastName}
                             onChange={(e) => { formHandle(e) }}
                         />
                         <p className="text-red-600">{validationData.lastName}</p>
@@ -119,17 +123,17 @@ const Login = () => {
                 </>}
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend font-normal">Email:</legend>
-                    <input type="text" name="email" className="input" placeholder="Type here" value={formData.email}
+                    <input type="text" name="email" className="input" placeholder="Type here" value={isLogInForm ? loginFormData.email : signupFormData.email}
                         onChange={(e) => { formHandle(e) }}
                     />
-                    <p className="text-red-600">{validationData.email}</p>
+                    <p className="text-red-600">{isLogInForm ? logValidationData.email : validationData.email}</p>
                 </fieldset>
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend font-normal">Password:</legend>
-                    <input type="password" name="password" className="input" placeholder="Type here" value={formData.password}
+                    <input type="password" name="password" className="input" placeholder="Type here" value={isLogInForm ? loginFormData.password : signupFormData.password}
                         onChange={(e) => { formHandle(e) }}
                     />
-                    <p className="text-red-600">{validationData.password}</p>
+                    <p className="text-red-600">{isLogInForm ? logValidationData.password : validationData.password}</p>
                 </fieldset>
                 <p className="text-red-600">{err}</p>
                 <div className="card-actions justify-center">
