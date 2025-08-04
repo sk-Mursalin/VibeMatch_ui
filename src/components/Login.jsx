@@ -33,7 +33,7 @@ const Login = () => {
             localStorage.setItem("loginFormData", JSON.stringify(loginFormData));
         }, 500)
 
-        return () => {clearTimeout(timeOut)}
+        return () => { clearTimeout(timeOut) }
     }, [loginFormData]);
 
     useEffect(() => {
@@ -91,6 +91,7 @@ const Login = () => {
                 { withCredentials: true }
             )
             dispatch(addUser(response.data));
+            localStorage.removeItem("loginFormData");
             return navigate('/')
         } catch (err) {
             setErr(err.response.data)
@@ -115,6 +116,8 @@ const Login = () => {
                 { withCredentials: true }
             )
             dispatch(addUser(response.data));
+            localStorage.removeItem("signupFormData")
+            localStorage.removeItem("isLoginForm")
             return navigate('/profile')
         } catch (err) {
             setErr(err.response.data)
