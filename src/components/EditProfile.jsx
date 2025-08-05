@@ -11,6 +11,7 @@ const EditProfile = ({ user }) => {
   const [lastName, setLastName] = useState(user.user.lastName);
   const [age, setAge] = useState(user.user.age);
   const [photoUrl, setPhotoUrl] = useState(user.user.photoUrl);
+  const [about,setAbout] = useState(user?.user?.about);
   const [gender, setGender] = useState(user.user.gender);
   const [toast, setToast] = useState(false);
   const [popUp, setPopUp] = useState(false);
@@ -23,7 +24,8 @@ const EditProfile = ({ user }) => {
         lastName,
         age,
         photoUrl,
-        gender
+        gender,
+        about
       }, { withCredentials: true });
       dispatch(addUser(res.data))
       setToast(true)
@@ -69,9 +71,10 @@ const EditProfile = ({ user }) => {
             <input type="text" className="input" placeholder="Type here" value={gender}
               onChange={(e) => { setGender(e.target.value) }}
             />
-            <p className="font-bold text-orange-600 cursor-pointer" onClick={() => setPopUp(true)}>change password</p>
           </fieldset>
-          <p className="text-red-600"></p>
+          <textarea className="textarea" placeholder="Bio" value={about} onChange={(e)=>{setAbout(e.target.value)}}></textarea>
+          <p className="font-bold text-orange-600 cursor-pointer" onClick={() => setPopUp(true)}>change password</p>
+
           <div className="card-actions justify-center">
             <button className="btn btn-primary" onClick={editHandler}>Save</button>
           </div>
@@ -88,6 +91,7 @@ const EditProfile = ({ user }) => {
           <h2 className="font-bold">{`${firstName} ${lastName}`}</h2>
           <p >age: {age}</p>
           <p >gender: {gender}</p>
+          <p>Bio: {about}</p>
         </div>
       </div>
       {toast && <div className="toast toast-top toast-center">

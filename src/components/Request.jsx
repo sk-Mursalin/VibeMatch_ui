@@ -13,7 +13,6 @@ const Request = () => {
         const res = await axios.get(BASE_URL + "/user/requests/recieved", { withCredentials: true });
         const data = res.data
         dispatch(addConnection(data))
-        console.log(res.data);
     }
 
     useEffect(() => {
@@ -32,7 +31,7 @@ const Request = () => {
         <div>
             <div className='screen900:w-1/2  screen900:max-w-[700px] screen350:max-w-full screen900:mx-auto screen350:mx-6'>
                 {connectionRequest.data.map((el) => {
-                    return <div className="card w-full bg-base-300 card-xs shadow-sm mt-4">
+                    return <div key={el._id} className="card w-full bg-base-300 card-xs shadow-sm mt-4">
                         <div className=" flex justify-between align-middle py-4 px-3">
                             <div className='w-11'>
                                 <img className=" w-full h-11 rounded-full" src={el.fromUserId.photoUrl} alt="" />
