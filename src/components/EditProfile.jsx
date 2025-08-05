@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux"
 import { BASE_URL } from "../utils/constant";
 import { addUser } from "../store/slices/userSlice";
+import ChangePass from "./ChangePass";
 
 const EditProfile = ({ user }) => {
   const dispatch = useDispatch();
@@ -10,9 +11,9 @@ const EditProfile = ({ user }) => {
   const [lastName, setLastName] = useState(user.user.lastName);
   const [age, setAge] = useState(user.user.age);
   const [photoUrl, setPhotoUrl] = useState(user.user.photoUrl);
-  const [skill, setSkill] = useState(user.user.skill);
   const [gender, setGender] = useState(user.user.gender);
   const [toast, setToast] = useState(false);
+  const [popUp, setPopUp] = useState(false);
 
 
   const editHandler = async () => {
@@ -68,12 +69,14 @@ const EditProfile = ({ user }) => {
             <input type="text" className="input" placeholder="Type here" value={gender}
               onChange={(e) => { setGender(e.target.value) }}
             />
+            <p className="font-bold text-orange-600 cursor-pointer" onClick={() => setPopUp(true)}>change password</p>
           </fieldset>
           <p className="text-red-600"></p>
           <div className="card-actions justify-center">
             <button className="btn btn-primary" onClick={editHandler}>Save</button>
           </div>
         </div>
+        {popUp && <ChangePass setPopUp={setPopUp} />}
       </div>
       <div className="card bg-base-300  max-w-96 shadow-sm h-full  p-4 screen350:mx-auto screen350:mt-4">
         <figure>
