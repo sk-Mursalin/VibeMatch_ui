@@ -10,7 +10,6 @@ import AllConnection from "./components/AllConnection"
 import ChatWindow from "./components/Chat"
 import PostFeed from "./components/postFeed"
 
-
 function App() {
 
   return (

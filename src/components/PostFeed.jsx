@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addPostFeed } from '../store/slices/postFeedSlice'
 
-export default PostFeed = () => {
+const  PostFeed = () => {
     const dispatch = useDispatch();
     const allPost = useSelector((state) => state.allPostFeed)
     const fetchPostFeed = async () => {
@@ -21,3 +21,5 @@ export default PostFeed = () => {
         </div>
     )
 }
+
+export default PostFeed
