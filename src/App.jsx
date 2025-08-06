@@ -8,7 +8,8 @@ import Profile from "./components/Profile"
 import Request from "./components/Request"
 import AllConnection from "./components/AllConnection"
 import ChatWindow from "./components/Chat"
-import { PostFeed } from "./components/postFeed"
+import PostFeed from "./components/postFeed"
+
 
 function App() {
 
