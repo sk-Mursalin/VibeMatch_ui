@@ -8,6 +8,7 @@ import Profile from "./components/Profile"
 import Request from "./components/Request"
 import AllConnection from "./components/AllConnection"
 import ChatWindow from "./components/Chat"
+import { PostFeed } from "./components/postFeed"
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
               <Route path="/request" element={<Request />} />
               <Route path="/connections" element={<AllConnection />} />
               <Route path="/chat/:targetUserId" element={<ChatWindow />} />
+              <Route path="/postfeed" element={<PostFeed />} />
             </Route>
           </Routes>
         </BrowserRouter>

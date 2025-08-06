@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constant";
 import { removeUser } from "../store/slices/userSlice";
+import { openModel } from "../store/slices/postModelSlice";
+import CreatePostModel from "./CreatePostModel";
 
 
 
@@ -10,7 +12,7 @@ const NavBar = () => {
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate()
-
+    const isModel = useSelector((state) => state.postModel)
     const handleLogout = async () => {
         await axios.post(BASE_URL + "/logout", {}, { withCredentials: true })
         dispatch(removeUser());
@@ -43,10 +45,13 @@ const NavBar = () => {
                             </li>
                             <li><Link to={"/request"}>connection request</Link></li>
                             <li><Link to={"/connections"}>connections</Link></li>
-                            <li><Link to={"/"}>your Feed</Link></li>
+                            <li><Link to={"/"}>your suggestion</Link></li>
+                            <li><a onClick={() => { dispatch(openModel()) }}>create a post</a></li>
+                            <li><Link to={"/postfeed"}>your post Feed</Link></li>
                             <li><a onClick={handleLogout}>Logout</a></li>
                         </ul>
                     </div>
+                    {isModel && <CreatePostModel />}
                 </div>}
             </div>
         </div>
