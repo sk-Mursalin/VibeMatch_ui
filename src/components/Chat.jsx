@@ -11,14 +11,12 @@ const Chat = () => {
     const [newMessage, setNewMessage] = useState("");
     const user = useSelector((store) => store.user);
     const userId = user?.user?._id;
-    console.log(userId);
 
     const fetchChatMessages = async () => {
         const chat = await axios.get(BASE_URL + "/chat/" + targetUserId, {
             withCredentials: true,
         });
 
-        console.log(chat.data.messages);
 
         const chatMessages = chat?.data?.messages.map((msg) => {
             const { senderId, text } = msg;

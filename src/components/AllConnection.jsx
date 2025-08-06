@@ -30,19 +30,31 @@ const AllConnection = () => {
             <div className='screen900:w-1/2  screen900:max-w-[700px] screen350:max-w-full screen900:mx-auto screen350:mx-6'>
 
                 {connections.data.map((el) => {
-                    return <div key={el._id} className="card w-full bg-base-300 card-xs shadow-sm mt-4">
-                        <div className=" flex justify-between align-middle py-4 px-3">
-
-                            <div className='w-11'>
-                                <img className=" w-full h-11 rounded-full cursor-pointer" src={el.photoUrl} alt="" onClick={() => {
-                                    setProfilePopUp(true);
-                                    setProfileId(el._id);
-                                }} />
+                    return <div key={el._id} className="card w-full bg-base-300 shadow-md rounded-xl mt-4 px-5 py-4">
+                        <div className="flex items-center justify-between gap-4">
+                            <div className="flex items-center gap-4">
+                                <img
+                                    src={el.photoUrl}
+                                    alt=""
+                                    className="w-12 h-12 rounded-full cursor-pointer object-cover"
+                                    onClick={() => {
+                                        setProfilePopUp(true);
+                                        setProfileId(el._id);
+                                    }}
+                                />
+                                <h2 className="text-lg font-medium text-white">
+                                    {`${el.firstName} ${el.lastName}`}
+                                </h2>
                             </div>
-                            <Link to={"/chat/" + el._id}><button className="btn btn-soft btn-error">chat</button></Link>
-                            <h2 className="card-title">{`${el.firstName} ${el.lastName}`}</h2>
+                            <Link to={"/chat/" + el._id}>
+                                <button className="btn btn-error btn-sm px-5 py-2 font-semibold rounded-md shadow-md hover:brightness-110 transition">
+                                    Chat
+                                </button>
+                            </Link>
+
                         </div>
                     </div>
+
                 })}
             </div>
             {profilePopUp && <ProfilePopUp setProfilePopUp={setProfilePopUp} profileId={profileId} />}
