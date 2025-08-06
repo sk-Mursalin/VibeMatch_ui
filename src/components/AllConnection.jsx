@@ -6,8 +6,8 @@ import { BASE_URL } from "../utils/constant";
 import { Link } from "react-router-dom";
 import NoFeed from "./NoFeed";
 import image from "../assets/no-connection.png"
-import ProfilePopUp from "./profilePopUp";
-import CreatePostModel from "./CreatePostModel";
+import ProfilePopUp from "./ProfilePopUp";
+
 
 const AllConnection = () => {
     const [profilePopUp, setProfilePopUp] = useState(false);
