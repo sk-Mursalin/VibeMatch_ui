@@ -8,13 +8,15 @@ import { useState } from "react";
 const CreatePostModel = () => {
     const [content, setConent] = useState("");
     const [postPhoto, setPostPhoto] = useState("");
-    const [toast, setToast] = useState(false)
+    const [toast, setToast] = useState(false);
+    const [responseError, setResponseError] = useState("")
     const createPost = async () => {
         try {
-            axios.post(BASE_URL + "/post/create", {
+            await axios.post(BASE_URL + "/post/create", {
                 content,
                 postPhoto
             }, { withCredentials: true })
+
             setConent("")
             setPostPhoto("");
             setToast(true);
@@ -22,7 +24,7 @@ const CreatePostModel = () => {
                 setToast(false)
             }, 2000)
         } catch (err) {
-            console.log(err.status);
+            setResponseError(err.response?.data?.message)
         }
     }
 
@@ -43,6 +45,7 @@ const CreatePostModel = () => {
                             onChange={(e) => { setPostPhoto(e.target.value) }}
                         />
                     </fieldset>
+                    <p className="text-red-500">{responseError}</p>
                     <div className="card-actions justify-center">
                         <button className="btn btn-primary" onClick={createPost}>Post</button>
                     </div>
