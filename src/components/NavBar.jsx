@@ -47,7 +47,7 @@ const NavBar = () => {
                             <li><Link to={"/connections"}>connections</Link></li>
                             <li><Link to={"/"}>your suggestion</Link></li>
                             <li><a onClick={() => { dispatch(openModel()) }}>create a post</a></li>
-                            <li><Link to={"/postfeed"}>your post Feed</Link></li>
+                            <li><Link to={"/postfeed"}>your Feed</Link></li>
                             <li><a onClick={handleLogout}>Logout</a></li>
                         </ul>
                     </div>

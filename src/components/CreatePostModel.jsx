@@ -8,14 +8,22 @@ import { useState } from "react";
 const CreatePostModel = () => {
     const [content, setConent] = useState("");
     const [postPhoto, setPostPhoto] = useState("");
-
+    const [toast, setToast] = useState(false)
     const createPost = async () => {
-        axios.post(BASE_URL + "/post/create", {
-            content,
-            postPhoto
-        }, { withCredentials: true })
-        setConent('')
-        setPostPhoto("")
+        try {
+            axios.post(BASE_URL + "/post/create", {
+                content,
+                postPhoto
+            }, { withCredentials: true })
+            setConent("")
+            setPostPhoto("");
+            setToast(true);
+            setTimeout(() => {
+                setToast(false)
+            }, 2000)
+        } catch (err) {
+            console.log(err.status);
+        }
     }
 
     const dispatch = useDispatch();
@@ -40,6 +48,11 @@ const CreatePostModel = () => {
                     </div>
                 </div>
             </div>
+            {toast && <div className=" fixed top-20 left-11">
+                <div className="alert alert-success">
+                    <span> post done</span>
+                </div>
+            </div>}
         </div>,
         document.getElementById("portal")
     )
