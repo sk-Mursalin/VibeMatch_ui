@@ -1,16 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const getDataFromStorage = localStorage.getItem("postModel")
+
 const modelSlice = createSlice({
     name: "postModel",
-    initialState: false,
+    initialState: getDataFromStorage ? JSON.parse(getDataFromStorage) : {postModel:false},
     reducers: {
         openModel(state, action) {
-            state = true
-            return state
+            state.postModel = true
+            localStorage.setItem("postModel",JSON.stringify({postModel:true}))
         },
         closeModel(state, action) {
-            state = false
-            return state
+            state.postModel = false
+            localStorage.removeItem("postModel")
         }
     }
 })

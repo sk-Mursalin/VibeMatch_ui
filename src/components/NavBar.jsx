@@ -51,7 +51,7 @@ const NavBar = () => {
                             <li><a onClick={handleLogout}>Logout</a></li>
                         </ul>
                     </div>
-                    {isModel && <CreatePostModel />}
+                    {isModel.postModel && <CreatePostModel />}
                 </div>}
             </div>
         </div>

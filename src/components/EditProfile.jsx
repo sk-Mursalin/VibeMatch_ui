@@ -11,10 +11,13 @@ const EditProfile = ({ user }) => {
   const [lastName, setLastName] = useState(user.user.lastName);
   const [age, setAge] = useState(user.user.age);
   const [photoUrl, setPhotoUrl] = useState(user.user.photoUrl);
-  const [about,setAbout] = useState(user?.user?.about);
+  const [about, setAbout] = useState(user?.user?.about);
   const [gender, setGender] = useState(user.user.gender);
   const [toast, setToast] = useState(false);
-  const [popUp, setPopUp] = useState(false);
+  const [popUp, setPopUp] = useState(() => {
+    const passwordModel = localStorage.getItem("passwordModel")
+    return passwordModel ? JSON.parse(passwordModel) : { passwordModel: false }
+  });
 
 
   const editHandler = async () => {
@@ -72,14 +75,17 @@ const EditProfile = ({ user }) => {
               onChange={(e) => { setGender(e.target.value) }}
             />
           </fieldset>
-          <textarea className="textarea" placeholder="Bio" value={about} onChange={(e)=>{setAbout(e.target.value)}}></textarea>
-          <p className="font-bold text-orange-600 cursor-pointer" onClick={() => setPopUp(true)}>change password</p>
+          <textarea className="textarea" placeholder="Bio" value={about} onChange={(e) => { setAbout(e.target.value) }}></textarea>
+          <p className="font-bold text-orange-600 cursor-pointer" onClick={() => {
+            setPopUp({passwordModel:true});
+            localStorage.setItem("passwordModel" , JSON.stringify({passwordModel:true}))
+          }}>change password</p>
 
           <div className="card-actions justify-center">
             <button className="btn btn-primary" onClick={editHandler}>Save</button>
           </div>
         </div>
-        {popUp && <ChangePass setPopUp={setPopUp} />}
+        {popUp.passwordModel && <ChangePass setPopUp={setPopUp} />}
       </div>
       <div className="card bg-base-300  max-w-96 shadow-sm h-full  p-4 screen350:mx-auto screen350:mt-4">
         <figure>

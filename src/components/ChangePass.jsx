@@ -31,7 +31,7 @@ const ChangePass = ({ setPopUp }) => {
     return createPortal(
         <div className="fixed inset-0 mx-auto  bg-black/40  ">
             <div className="card card-border mt-44 bg-base-100 max-w-96 screen400:mx-auto screen350:mx-2 ">
-                <span className="ml-auto text-lg cursor-pointer pr-3 hover:text-red-700" onClick={() => { setPopUp(false) }}>⨯</span>
+                <span className="ml-auto text-lg cursor-pointer pr-3 hover:text-red-700" onClick={() => { setPopUp({passwordModel:false});localStorage.removeItem("passwordModel") }}>⨯</span>
                 <div className="card-body w-full mx-auto ">
                     <h2 className="card-title justify-center">password change</h2>
                     <fieldset className="fieldset">
