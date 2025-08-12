@@ -19,12 +19,12 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />}>
               <Route path="/login" element={<Login />} />
-              <Route path="/" element={<Feed />} />
+              <Route path="/" element={<FeedPost />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/request" element={<Request />} />
               <Route path="/connections" element={<AllConnection />} />
               <Route path="/chat/:targetUserId" element={<ChatWindow />} />
-              <Route path="/postfeed" element={<FeedPost />} />
+              <Route path="/suggestion" element={<Feed />} />
             </Route>
           </Routes>
         </BrowserRouter>
