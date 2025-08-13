@@ -20,7 +20,7 @@ const PostCard = ({ post }) => {
                 <p className="text-md text-gray-200 mb-3">{content}</p>
             )}
 
-            {(
+            {postPhoto && (
                 <img
                     src={postPhoto}
                     alt="Post"
