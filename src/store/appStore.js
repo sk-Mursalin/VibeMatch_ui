@@ -12,7 +12,7 @@ const appStore = configureStore({
         request: connectionRequestReducer,
         friend: myConnectionReducer,
         postModel: createModelReducer,
-        allPostFeed: allPostFeedReducer
+        allPostFeed: allPostFeedReducer,
     }
 });
 

@@ -4,8 +4,8 @@ import { BASE_URL } from '../utils/constant'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFeed } from '../store/slices/feedSlice'
-import NoFeed from './NoFeed'
 import image from "../assets/no-suggestion.png"
+import NoSuggestion from './NoSuggestion'
 
 const Feed = () => {
   const feed = useSelector((state) => state.feed);
@@ -23,7 +23,7 @@ const Feed = () => {
   }, []);
 
   if (!feed) return
-  if (feed.length <= 0) return <NoFeed heading={"No suggestion Available"} message={"Looks like you’ve reached the end. Check back later for new matches!"} image={image} />
+  if (feed.length <= 0) return <NoSuggestion heading={"No suggestion Available"} message={"Looks like you’ve reached the end. Check back later for new matches!"} image={image} />
 
   return (
     <FeedCard feedData={feed[0]} />

@@ -3,8 +3,8 @@ import  { useEffect } from 'react'
 import { BASE_URL } from '../utils/constant'
 import { useDispatch, useSelector } from 'react-redux'
 import { addConnection, removeConnection } from '../store/slices/requestSlice'
-import NoFeed from './NoFeed'
 import image from "../assets/no-connection-request.png"
+import NoSuggestion from './NoSuggestion'
 
 const Request = () => {
     const connectionRequest = useSelector((state) => state.request)
@@ -26,7 +26,7 @@ const Request = () => {
 
 
     if (!connectionRequest) return
-    if (connectionRequest.data.length === 0) { return <NoFeed heading={"no connection request"} message={"you have no pending requests. check again later for any new invites!"} image={image} /> }
+    if (connectionRequest.data.length === 0) { return <NoSuggestion heading={"no connection request"} message={"you have no pending requests. check again later for any new invites!"} image={image} /> }
     return (
         <div>
             <div className='screen900:w-1/2  screen900:max-w-[700px] screen350:max-w-full screen900:mx-auto screen350:mx-6'>

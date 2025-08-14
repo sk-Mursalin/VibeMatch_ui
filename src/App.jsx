@@ -1,8 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Home from "./components/Home"
 import Login from "./components/Login"
-import { Provider } from "react-redux"
-import appStore from "./store/appStore"
 import Feed from "./components/Suggestion"
 import Profile from "./components/Profile"
 import Request from "./components/Request"
@@ -10,11 +8,11 @@ import AllConnection from "./components/AllConnection"
 import ChatWindow from "./components/Chat"
 import FeedPost from "./components/FeedPost"
 
+
 function App() {
 
   return (
     <>
-      <Provider store={appStore}>
         <BrowserRouter basename="/">
           <Routes>
             <Route path="/" element={<Home />}>
@@ -28,7 +26,6 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
-      </Provider>
     </>
   )
 }

@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../utils/constant";
 import { Link } from "react-router-dom";
-import NoFeed from "./NoFeed";
 import image from "../assets/no-connection.png"
 import ProfilePopUp from "./ProfilePopUp";
+import NoSuggestion from "./NoSuggestion";
 
 
 const AllConnection = () => {
@@ -24,7 +24,7 @@ const AllConnection = () => {
     }, []);
 
     if (!connections) return
-    if (connections.data.length === 0) { return <NoFeed heading={" you have no connections right now"} message={"check later to see new firnds"} image={image} /> }
+    if (connections.data.length === 0) { return <NoSuggestion heading={" you have no connections right now"} message={"check later to see new firnds"} image={image} /> }
     return (
         <div>
             <div className='screen900:w-1/2  screen900:max-w-[700px] screen350:max-w-full screen900:mx-auto screen350:mx-6'>
