@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { createSocketConnection } from "../utils/socket";
 import { useSelector } from "react-redux";
@@ -10,7 +10,9 @@ const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const user = useSelector((store) => store.user);
+    const chatUser = useSelector((store) => store.chatUser);
     const userId = user?.user?._id;
+    const scrollDiv = useRef(null);
 
     const fetchChatMessages = async () => {
         const chat = await axios.get(BASE_URL + "/chat/" + targetUserId, {
@@ -65,11 +67,17 @@ const Chat = () => {
         setNewMessage("");
     };
 
+    useEffect(() => {
+        scrollDiv.current.scrollIntoView({ behavior: "smooth" })
+    },[messages])
     return (
         <div className="w-full max-w-3xl mx-auto border border-gray-700 rounded-lg shadow-md mt-6 h-[70vh] flex flex-col bg-gray-900 text-white">
-            <div className="p-4 border-b border-gray-700 text-lg font-semibold bg-gray-800">
-                Chat
-            </div>
+            {<div className="p-4 border-b border-gray-700  bg-gray-800 flex justify-start align-middle gap-3">
+                <div className="w-10 h-10 rounded-full ">
+                    <img className=" w-10 h-10 rounded-full" src={chatUser?.photoUrl} alt="" />
+                </div>
+                <p className="font-semibold mt-2">{`${chatUser.firstName} ${chatUser.lastName}`}</p>
+            </div>}
 
             <div className="flex-1 overflow-y-auto p-4 space-y-4 ">
                 {messages.map((msg, index) => (
@@ -79,12 +87,12 @@ const Chat = () => {
                             }`}
                     >
                         <div className="text-xs text-gray-400 mb-1">
-                            {`${msg.firstName} ${msg.lastName}`} 
+                            {`${msg.firstName} ${msg.lastName}`}
                         </div>
                         <div
                             className={`rounded-lg px-4 py-2 break-all  text-sm ${user.user.firstName === msg.firstName
-                                    ? "bg-blue-600 text-white"
-                                    : "bg-gray-700 text-white"
+                                ? "bg-blue-600 text-white"
+                                : "bg-gray-700 text-white"
                                 }`}
                         >
                             {msg.text}
@@ -92,9 +100,12 @@ const Chat = () => {
                         {/* <div className="text-[10px] text-gray-500 mt-1">Seen</div> */}
                     </div>
                 ))}
+                <div ref={scrollDiv}></div>
             </div>
 
-            <div className="p-4 border-t border-gray-700 bg-gray-800 flex items-center gap-3">
+            <form className="p-4 border-t border-gray-700 bg-gray-800 flex items-center gap-3" onSubmit={(e) => {
+                e.preventDefault();
+            }}>
                 <input
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
@@ -107,7 +118,7 @@ const Chat = () => {
                 >
                     Send
                 </button>
-            </div>
+            </form>
         </div>
 
     );

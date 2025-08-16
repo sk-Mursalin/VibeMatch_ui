@@ -5,6 +5,7 @@ import connectionRequestReducer from "./slices/requestSlice"
 import myConnectionReducer from "./slices/connectionSlice"
 import createModelReducer from "./slices/postModelSlice"
 import allPostFeedReducer from "./slices/postFeedSlice"
+import chatUserReducer from "./slices/chatUserSlice"
 const appStore = configureStore({
     reducer: {
         user: userReducer,
@@ -13,6 +14,7 @@ const appStore = configureStore({
         friend: myConnectionReducer,
         postModel: createModelReducer,
         allPostFeed: allPostFeedReducer,
+        chatUser: chatUserReducer
     }
 });
 

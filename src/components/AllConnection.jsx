@@ -3,10 +3,11 @@ import { addFriends } from "../store/slices/connectionSlice";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../utils/constant";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import image from "../assets/no-connection.png"
 import ProfilePopUp from "./ProfilePopUp";
 import NoSuggestion from "./NoSuggestion";
+import { addChatUser } from "../store/slices/chatUserSlice";
 
 
 const AllConnection = () => {
@@ -14,6 +15,7 @@ const AllConnection = () => {
     const [profileId, setProfileId] = useState(null);
     const connections = useSelector((state) => state.friend);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const fetchConnectionRequest = async () => {
         const res = await axios.get(BASE_URL + "/user/allconnection", { withCredentials: true });
         dispatch(addFriends(res.data));
@@ -46,11 +48,13 @@ const AllConnection = () => {
                                     {`${el.firstName} ${el.lastName}`}
                                 </h2>
                             </div>
-                            <Link to={"/chat/" + el._id}>
-                                <button className="btn btn-error btn-sm px-5 py-2 font-semibold rounded-md shadow-md hover:brightness-110 transition">
+                            
+                                <button className="btn btn-error btn-sm px-5 py-2 font-semibold rounded-md shadow-md hover:brightness-110 transition" onClick={()=>{
+                                    navigate("/chat/" + el._id)
+                                    dispatch(addChatUser(el))
+                                    }}>
                                     Chat
                                 </button>
-                            </Link>
 
                         </div>
                     </div>
