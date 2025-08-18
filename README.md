@@ -50,6 +50,7 @@ npm run dev
 - 📰 **Feed** – Stay updated with posts from your network.
 - 👥 **Profile Suggestions**  – Discover and connect with new people.
 - 🔑 **Update Password** – Securely update your account password anytime.
+- 🌗 **Light & Dark Mode** – Switch seamlessly between light ☀️ and dark 🌙 themes.
 
 ## 🔄 More exciting features coming soon… 🚀
 
