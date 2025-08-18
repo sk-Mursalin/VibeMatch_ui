@@ -45,8 +45,13 @@ npm run dev
 - 📩 **Send Connection Requests** - Request to connect with other developers.
 - ✅ **Review Connection Requests** - Accept or reject incoming connection requests.
 - 🌍 **Responsive Design** - Fully optimized for mobile & desktop.
-- 🌍 **Chat** - chat with your connection.
+- 💬 **Chat** - Chat instantly with your connections.
+- 📝 **Post** – Share your thoughts 💡 or photos 📸 with the world.
+- 📰 **Feed** – Stay updated with posts from your network.
+- 👥 **Profile Suggestions**  – Discover and connect with new people.
+- 🔑 **Update Password** – Securely update your account password anytime.
 
+## 🔄 More exciting features coming soon… 🚀
 
 ## 🔧 API Endpoints
 
