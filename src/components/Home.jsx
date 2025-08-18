@@ -10,7 +10,7 @@ const Home = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
-
+    const theme = useSelector((state) => state.theme);
 
 
     const fetchProfile = async () => {
@@ -29,6 +29,9 @@ const Home = () => {
         fetchProfile()
     }, [])
 
+    useEffect(() => {
+        document.documentElement.setAttribute("data-theme", theme);
+    })
 
 
     return (

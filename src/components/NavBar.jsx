@@ -5,6 +5,9 @@ import { BASE_URL } from "../utils/constant";
 import { removeUser } from "../store/slices/userSlice";
 import { openModel } from "../store/slices/postModelSlice";
 import CreatePostModel from "./CreatePostModel";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
+import { toggleTheme } from "../store/slices/themeSlice";
 
 
 
@@ -13,6 +16,8 @@ const NavBar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const isModel = useSelector((state) => state.postModel)
+    const theme = useSelector((state) => state.theme)
+
     const handleLogout = async () => {
         await axios.post(BASE_URL + "/logout", {}, { withCredentials: true })
         dispatch(removeUser());
@@ -24,6 +29,11 @@ const NavBar = () => {
             <div className="navbar bg-base-300 shadow-sm px-10 max-w-[1100px] mx-auto">
                 <div className="flex-1">
                     <Link to={"/"} className="btn btn-ghost text-xl">VibeMatch</Link>
+                </div>
+                <div className="mr-5 cursor-pointer" onClick={() => {
+                    dispatch(toggleTheme(theme == "dark" ? "light" : "dark"))
+                }}>
+                    <FontAwesomeIcon icon={theme == "dark" ? faSun : faMoon} />
                 </div>
                 {user && <div className="flex gap-2">
                     <div className="dropdown dropdown-end">

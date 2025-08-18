@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities{
+/* @layer utilities{
    .dark{
     @apply bg-black text-white
    }
    .light{
       @apply bg-white text-black
    }
-}
+} */
