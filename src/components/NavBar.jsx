@@ -48,16 +48,16 @@ const NavBar = () => {
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                             <li>
-                                <Link to={"/Profile"} className="justify-between">
-                                    Profile
+                                <Link to={"/editProfile"} className="justify-between">
+                                    Edit Profile
                                     <span className="badge">New</span>
                                 </Link>
                             </li>
-                            <li><Link to={"/request"}>connection request</Link></li>
-                            <li><Link to={"/connections"}>connections</Link></li>
-                            <li><Link to={"/suggestion"}>your suggestion</Link></li>
-                            <li><a onClick={() => { dispatch(openModel()) }}>create a post</a></li>
-                            <li><Link to={"/"}>your Feed</Link></li>
+                            <li><Link to={"/request"}>Connection request</Link></li>
+                            <li><Link to={"/connections"}>Connections</Link></li>
+                            <li><Link to={"/suggestion"}>Your suggestion</Link></li>
+                            <li><a onClick={() => { dispatch(openModel()) }}>Create a post</a></li>
+                            <li><Link to={"/"}>Your Feed</Link></li>
                             <li><a onClick={handleLogout}>Logout</a></li>
                         </ul>
                     </div>

@@ -117,7 +117,7 @@ const Login = () => {
             dispatch(addUser(response.data));
             localStorage.removeItem("signupFormData")
             localStorage.removeItem("isLoginForm")
-            return navigate('/profile')
+            return navigate('/editProfile')
         } catch (err) {
             setErr(err.response.data)
         }

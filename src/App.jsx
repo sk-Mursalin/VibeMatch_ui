@@ -7,6 +7,7 @@ import Request from "./components/Request"
 import AllConnection from "./components/AllConnection"
 import ChatWindow from "./components/Chat"
 import FeedPost from "./components/FeedPost"
+import SeeProfile from "./components/SeeProfile"
 
 
 function App() {
@@ -18,11 +19,12 @@ function App() {
             <Route path="/" element={<Home />}>
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<FeedPost />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/editProfile" element={<Profile />} />
               <Route path="/request" element={<Request />} />
               <Route path="/connections" element={<AllConnection />} />
               <Route path="/chat/:targetUserId" element={<ChatWindow />} />
               <Route path="/suggestion" element={<Feed />} />
+              <Route path="/seeProfile/:profileId" element={<SeeProfile />} />
             </Route>
           </Routes>
         </BrowserRouter>

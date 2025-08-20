@@ -1,8 +1,10 @@
 import { formatDistanceToNow } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 const PostCard = ({ post }) => {
+    const navigate = useNavigate()
     const { content, postPhoto, postCreatedBy, createdAt } = post
-    const { firstName, lastName, photoUrl } = postCreatedBy
+    const { firstName, lastName, photoUrl, _id } = postCreatedBy
 
     const relativeTime = formatDistanceToNow(new Date(createdAt), {
         addSuffix: true,
@@ -10,7 +12,9 @@ const PostCard = ({ post }) => {
     return (
         <div className="bg-[#1E1E2F] text-white max-w-xl mx-auto my-4 p-4 rounded-lg shadow-md border border-gray-700">
             <div className="text-sm text-gray-400 mb-2 flex items-center gap-4">
-                <div className='w-11'>
+                <div className='w-11 cursor-pointer' onClick={() => {
+                    navigate("/seeProfile/" + _id)
+                }}>
                     <img className=" w-full h-11 rounded-full" src={photoUrl} alt="" />
                 </div>
                 <span className="font-semibold">{`${firstName} ${lastName}`}</span> • <span>{relativeTime}</span>
