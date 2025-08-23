@@ -7,6 +7,9 @@ import createModelReducer from "./slices/postModelSlice"
 import allPostFeedReducer from "./slices/postFeedSlice"
 import chatUserReducer from "./slices/chatUserSlice"
 import themeReducer from "./slices/themeSlice"
+import profilePostReducer from "./slices/profilePostSlice"
+import profileFriendsReducer from "./slices/profileFriendsSlice"
+
 const appStore = configureStore({
     reducer: {
         user: userReducer,
@@ -16,7 +19,9 @@ const appStore = configureStore({
         postModel: createModelReducer,
         allPostFeed: allPostFeedReducer,
         chatUser: chatUserReducer,
-        theme: themeReducer
+        theme: themeReducer,
+        profilePost: profilePostReducer,
+        profileFriends: profileFriendsReducer,
     }
 });
 
