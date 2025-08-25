@@ -35,8 +35,8 @@ const PostCard = ({ post }) => {
                 />
             )}
 
-            <div className="flex gap-4  text-sm mt-2">
-                <button onClick={() => { setHeart(!isHeart) }}><p className="text-2xl">{isHeart ? "🤍" : "❤"}</p></button>
+            <div className="flex gap-4   text-sm mt-2">
+                <button onClick={() => { setHeart(!isHeart) }}><p className="text-xl">{isHeart ? "🤍" : "❤"}</p></button>
                 <button><FontAwesomeIcon icon={faComment} className="text-xl" /></button>
             </div>
         </div>
