@@ -44,7 +44,7 @@ const AllConnection = () => {
                                         setProfileId(el._id);
                                     }}
                                 />
-                                <h2 className="text-lg font-medium text-white">
+                                <h2 className="text-lg font-medium">
                                     {`${el.firstName} ${el.lastName}`}
                                 </h2>
                             </div>
