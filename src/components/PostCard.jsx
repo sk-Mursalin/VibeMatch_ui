@@ -1,11 +1,13 @@
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faComment } from "@fortawesome/free-regular-svg-icons";
+import { useState } from "react";
 const PostCard = ({ post }) => {
     const navigate = useNavigate()
     const { content, postPhoto, postCreatedBy, createdAt } = post
     const { firstName, lastName, photoUrl, _id } = postCreatedBy
+    const [isHeart, setHeart] = useState(false);
 
     const relativeTime = formatDistanceToNow(new Date(createdAt), {
         addSuffix: true,
@@ -34,7 +36,7 @@ const PostCard = ({ post }) => {
             )}
 
             <div className="flex gap-4  text-sm mt-2">
-                <button><FontAwesomeIcon icon={faHeart} className="text-xl" /></button>
+                <button onClick={() => { setHeart(!isHeart) }}><p className="text-2xl">{isHeart ? "🤍" : "❤"}</p></button>
                 <button><FontAwesomeIcon icon={faComment} className="text-xl" /></button>
             </div>
         </div>
