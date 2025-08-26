@@ -32,7 +32,6 @@ const SeeProfile = () => {
     if (!allPosts) return
     const { about, firstName, lastName, photoUrl } = allPosts?.[0]?.postCreatedBy;
 
-
     return (
         <div className="max-w-3xl mx-auto mt-6 bg-transparent shadow-lg rounded-2xl overflow-hidden">
             <div className="relative">
