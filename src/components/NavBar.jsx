@@ -28,7 +28,7 @@ const NavBar = () => {
         <div className="bg-base-300 sticky top-0 z-10">
             <div className="navbar bg-base-300 shadow-sm px-10 max-w-[1100px] mx-auto">
                 <div className="flex-1">
-                    <Link to={"/"} className="btn btn-ghost text-xl">VibeMatch</Link>
+                    <Link to={user && "/"} className="btn btn-ghost text-xl">VibeMatch</Link>
                 </div>
                 <div className="mr-5 cursor-pointer" onClick={() => {
                     dispatch(toggleTheme(theme == "dark" ? "light" : "dark"))
