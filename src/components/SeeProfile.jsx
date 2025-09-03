@@ -7,20 +7,25 @@ import { addAllProfilePost } from "../store/slices/profilePostSlice"
 import { addAllProfileFriends } from "../store/slices/profileFriendsSlice"
 import UserPosts from "./UserPosts"
 import UserFriends from "./UserFriends"
+import { addProfile } from "../store/slices/profileSlice"
 
 const SeeProfile = () => {
     const { profileId } = useParams();
     const dispatch = useDispatch();
     const allPosts = useSelector((state) => state.profilePost);
     const allFriends = useSelector((state) => state.profileFriends);
+    const UserProfile = useSelector((state) => state.profile);
     const [seepost, setSeePost] = useState(false);
     const [seeFriends, setSeeFriends] = useState(false);
 
     const fetchPost = async () => {
-        const [posts, friends] = await Promise.all(
+        const [posts, friends, profile] = await Promise.all(
             [axios.get(`${BASE_URL}/post/get/${profileId}`, { withCredentials: true }),
-            axios.get(`${BASE_URL}/connections/${profileId}`, { withCredentials: true })]
+            axios.get(`${BASE_URL}/connections/${profileId}`, { withCredentials: true }),
+            axios.get(`${BASE_URL}/profile/get/${profileId}`, { withCredentials: true })
+            ]
         )
+        dispatch(addProfile(profile?.data?.data));
         dispatch(addAllProfilePost(posts?.data?.data));
         dispatch(addAllProfileFriends(friends?.data?.data));
     }
@@ -29,8 +34,10 @@ const SeeProfile = () => {
         fetchPost();
     }, [])
 
-    if (!allPosts) return
-    const { about, firstName, lastName, photoUrl } = allPosts?.[0]?.postCreatedBy;
+    console.log(UserProfile);
+
+    if (!UserProfile) return
+    const { about, firstName, lastName, photoUrl } = UserProfile;
 
     return (
         <div className="max-w-3xl mx-auto mt-6 bg-transparent shadow-lg rounded-2xl overflow-hidden">

@@ -1,13 +1,15 @@
 import axios from 'axios'
-import  { useEffect } from 'react'
+import { useEffect } from 'react'
 import { BASE_URL } from '../utils/constant'
 import { useDispatch, useSelector } from 'react-redux'
 import { addConnection, removeConnection } from '../store/slices/requestSlice'
 import image from "../assets/no-connection-request.png"
 import NoSuggestion from './NoSuggestion'
+import { useNavigate } from 'react-router-dom'
 
 const Request = () => {
     const connectionRequest = useSelector((state) => state.request)
+    const navigate = useNavigate();
     const dispatch = useDispatch()
     const fetchConnectionRequest = async () => {
         const res = await axios.get(BASE_URL + "/user/requests/recieved", { withCredentials: true });
@@ -34,7 +36,9 @@ const Request = () => {
                     return <div key={el._id} className="card w-full bg-base-300 card-xs shadow-sm mt-4">
                         <div className=" flex justify-between align-middle py-4 px-3">
                             <div className='w-11'>
-                                <img className=" w-full h-11 rounded-full" src={el.fromUserId.photoUrl} alt="" />
+                                <img className=" w-full h-11 rounded-full cursor-pointer" src={el.fromUserId.photoUrl} alt=""
+                                    onClick={() => { navigate("/seeProfile/" + el?.fromUserId?._id) }}
+                                />
                             </div>
                             <h2 className="card-title">{`${el.fromUserId.firstName} ${el.fromUserId.lastName}`}</h2>
                             <div className="justify-end card-actions">

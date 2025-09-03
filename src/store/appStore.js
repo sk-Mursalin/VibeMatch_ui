@@ -9,6 +9,7 @@ import chatUserReducer from "./slices/chatUserSlice"
 import themeReducer from "./slices/themeSlice"
 import profilePostReducer from "./slices/profilePostSlice"
 import profileFriendsReducer from "./slices/profileFriendsSlice"
+import profileReducer from "./slices/profileSlice"
 
 const appStore = configureStore({
     reducer: {
@@ -22,6 +23,7 @@ const appStore = configureStore({
         theme: themeReducer,
         profilePost: profilePostReducer,
         profileFriends: profileFriendsReducer,
+        profile: profileReducer
     }
 });
 
