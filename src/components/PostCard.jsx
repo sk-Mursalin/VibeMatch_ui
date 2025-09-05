@@ -3,15 +3,33 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "../utils/constant"
 const PostCard = ({ post }) => {
     const navigate = useNavigate()
-    const { content, postPhoto, postCreatedBy, createdAt } = post
+    const { content, postPhoto, postCreatedBy, createdAt, _id: postId, isLiked: like } = post
     const { firstName, lastName, photoUrl, _id } = postCreatedBy
-    const [isHeart, setHeart] = useState(false);
+    const [isLiked, setIsLiked] = useState(like);
 
     const relativeTime = formatDistanceToNow(new Date(createdAt), {
         addSuffix: true,
     });
+
+    const likeHandler = async (postId) => {
+        try {
+            const res = await axios.patch(`${BASE_URL}/post/like/${postId}`, {}, { withCredentials: true });
+
+            if (res?.data?.message == "like") {
+                setIsLiked(true)
+            } else if (res?.data?.message == "unlike") {
+                setIsLiked(false)
+            }
+
+        } catch (err) {
+            console.log(err.response);
+        }
+    }
+
     return (
         <div className="bg-transparent max-w-xl mx-auto my-4 p-4 rounded-lg shadow-md border border-gray-700">
             <div className="text-sm  mb-2 flex items-center gap-4">
@@ -36,7 +54,10 @@ const PostCard = ({ post }) => {
             )}
 
             <div className="flex gap-4   text-sm mt-2">
-                <button onClick={() => { setHeart(!isHeart) }}><p className="text-xl">{isHeart ? "🤍" : "❤"}</p></button>
+                <button onClick={() => {
+                    likeHandler(postId)
+                }}>
+                    <p className="text-xl">{isLiked ? "❤" : "🤍"}</p></button>
                 <button><FontAwesomeIcon icon={faComment} className="text-xl" /></button>
             </div>
         </div>

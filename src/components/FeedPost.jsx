@@ -9,7 +9,9 @@ import image from "../assets/no-feed.png"
 
 const FeedPost = () => {
     const dispatch = useDispatch();
-    const allPost = useSelector((state) => state.allPostFeed)
+    const allPost = useSelector((state) => state.allPostFeed);
+    const user = useSelector((state) => state.user)
+
     const fetchPostFeed = async () => {
         const data = await axios.get(BASE_URL + "/post/get", { withCredentials: true });
         dispatch(addPostFeed(data.data));
@@ -21,7 +23,12 @@ const FeedPost = () => {
     if (allPost.data.length == 0) return <NoSuggestion heading={"No fedd Available for you"} message={"Looks like we have don't have  feed for you"} image={image} />
     return !allPost ? <div className='flex justify-center mt-2'><span className="loading loading-spinner text-success"></span></div> : (
         <div>
-            {allPost.data.map((post) => <PostCard key={post._id} post={post} />)}
+            {allPost.data.map((post) => <PostCard key={post._id} post={
+                {
+                    ...post,
+                    isLiked: post?.like.includes(user?.user?._id)
+                }
+            } />)}
         </div>
     )
 }
