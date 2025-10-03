@@ -8,6 +8,7 @@ import CreatePostModel from "./CreatePostModel";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
 import { toggleTheme } from "../store/slices/themeSlice";
+import { Menu } from "lucide-react";
 
 
 
@@ -28,7 +29,10 @@ const NavBar = () => {
         <div className="bg-base-300 sticky top-0 z-10">
             <div className="navbar bg-base-300 shadow-sm px-10 max-w-[1100px] mx-auto">
                 <div className="flex-1">
-                    <Link to={user && "/"} className="btn btn-ghost text-xl">VibeMatch</Link>
+                    <div className="flex gap-5 items-center">
+                        {user && <Menu className="cursor-pointer" />}
+                        <Link to={user && "/"} className=" btn btn-ghost text-xl">VibeMatch</Link>
+                    </div>
                 </div>
                 <div className="mr-5 cursor-pointer" onClick={() => {
                     dispatch(toggleTheme(theme == "dark" ? "light" : "dark"))
