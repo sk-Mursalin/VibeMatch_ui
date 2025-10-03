@@ -5,6 +5,8 @@ import { faComment } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../utils/constant"
+import { Heart } from 'lucide-react';
+import redHeart from "../assets/heart.png"
 const PostCard = ({ post }) => {
     const navigate = useNavigate()
     const { content, postPhoto, postCreatedBy, createdAt, _id: postId, isLiked: like } = post
@@ -57,7 +59,7 @@ const PostCard = ({ post }) => {
                 <button onClick={() => {
                     likeHandler(postId)
                 }}>
-                    <p className="text-xl">{isLiked ? "❤" : "🤍"}</p></button>
+                    <p className="text-xl">{isLiked ? <img src={redHeart} className="w-6"></img> : <Heart />}</p></button>
                 <button><FontAwesomeIcon icon={faComment} className="text-xl" /></button>
             </div>
         </div>
@@ -65,3 +67,4 @@ const PostCard = ({ post }) => {
 };
 
 export default PostCard;
+
