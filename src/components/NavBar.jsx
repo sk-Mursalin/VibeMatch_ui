@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
 import { toggleTheme } from "../store/slices/themeSlice";
 import { Menu } from "lucide-react";
+import { toggleBar } from "../store/slices/sidebarSlice";
 
 
 
@@ -30,7 +31,7 @@ const NavBar = () => {
             <div className="navbar bg-base-300 shadow-sm px-10 max-w-[1100px] mx-auto">
                 <div className="flex-1">
                     <div className="flex gap-5 items-center">
-                        {user && <Menu className="cursor-pointer" />}
+                        {user && <Menu className="cursor-pointer" onClick={() => dispatch(toggleBar())} />}
                         <Link to={user && "/"} className=" btn btn-ghost text-xl">VibeMatch</Link>
                     </div>
                 </div>
@@ -51,17 +52,7 @@ const NavBar = () => {
                         <ul
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                            <li>
-                                <Link to={"/editProfile"} className="justify-between">
-                                    Edit Profile
-                                    <span className="badge">New</span>
-                                </Link>
-                            </li>
-                            <li><Link to={"/request"}>Connection request</Link></li>
-                            <li><Link to={"/connections"}>Connections</Link></li>
-                            <li><Link to={"/suggestion"}>Your suggestion</Link></li>
                             <li><a onClick={() => { dispatch(openModel()) }}>Create a post</a></li>
-                            <li><Link to={"/"}>Your Feed</Link></li>
                             <li><a onClick={handleLogout}>Logout</a></li>
                         </ul>
                     </div>

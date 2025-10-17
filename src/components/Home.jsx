@@ -5,6 +5,7 @@ import { BASE_URL } from '../utils/constant'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addUser } from '../store/slices/userSlice'
+import Sidebar from './Sidebar'
 
 const Home = () => {
     const navigate = useNavigate();
@@ -38,6 +39,7 @@ const Home = () => {
         <>
             <NavBar />
             <Outlet />
+            <Sidebar/>
         </>
     )
 }
